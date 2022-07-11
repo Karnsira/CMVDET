@@ -1,0 +1,22 @@
+--------------- Configuration ---------------
+WSI_path : /mnt/raid1/tungmay/notebook/data/WSI/
+WSI_slides : ['SP63-6861 D.svs']
+model : /mnt/raid1/tungmay/CMV/Training/2022-03-24/latest.pth
+model_config : /mnt/raid1/tungmay/CMV/Training/2022-03-24/config_faster_resnet50_2.py
+gpu : cuda:1
+batch_size : 16
+patch_size : 256
+slide_step : 128
+nms_thres : 0.1
+result : output/
+------------------ Inference ------------------
+Test slides :  ['SP63-6861 D.svs']
+
+Total slides :  1
+load checkpoint from local path: /mnt/raid1/tungmay/CMV/Training/2022-03-24/latest.pth
+Creating new detection dict (pkl)
+Creating folder for pred_boxes
+ WSI(CMV) Current Slide : SP63-6861 D.svs || 1/1 Total images =  18080
+Time :  9.0 minutes, 36.0 seconds
+Total time  :  9.0 minutes, 36.0 seconds
+Done...
