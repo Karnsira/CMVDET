@@ -1,13 +1,7 @@
-#Update sys path to include the pytorch RetinaNet modules
 import pickle
 import warnings
 import numpy as np
 import pandas as pd
-from pathlib import Path
-import torch, torchvision
-import matplotlib.pyplot as plt
-import torchvision.ops.boxes as bops
-from matplotlib.patches import Rectangle
 from SlideRunner.dataAccess.database import Database
 
 def ignore_warning(): return warnings.filterwarnings('ignore')
