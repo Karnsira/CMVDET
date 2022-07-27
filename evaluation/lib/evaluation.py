@@ -2,11 +2,9 @@ import pickle
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import KDTree
-import sys
-sys.path.append('')
-from evaluation.lib.nms_WSI import nms
-from evaluation.lib.utils import load_database, get_anno_boxes
-from evaluation.lib.objectDetectionHelper import getMaxDetBoxDiagLength
+from nms_WSI import nms
+from utils import load_database, get_anno_boxes
+from objectDetectionHelper import getMaxDetBoxDiagLength
 
 
 #  ----------------------- Calculate Evaluation Metrics ----------------------- #
@@ -14,7 +12,7 @@ from evaluation.lib.objectDetectionHelper import getMaxDetBoxDiagLength
 def get_metric(tp : int, fp : int , fn : int, beta = None) -> dict:
         
         try : 
-            recall = tp/ (tp + fn)
+            recall = tp/(tp + fn)
         except ZeroDivisionError :
             recall = 0
         try : 
@@ -421,7 +419,7 @@ def show_eval_results(databasefile : str, fold = [1,2],mode = 'all', top_k = 10,
         extra_sum = [ f'{sum(metric_df["HITL"])} / {slide_num}', f'{sum(metric_df["Full-AI"])} / {slide_num}']
     
     sum_df = pd.DataFrame([[sumSlide, sumRTP, sumTP, sumFP, sumFN, sumF1, sumF2, sumRecall, sumPrecision]+extra_sum] ,
-                      columns = ['Slide Name', 'Actual', 'TP',  'FP', 'FN', 'F1', 'F2', 'Recall', 'Precision']+extra_column , )
+                      columns = ['Slide Name', 'Actual', 'TP',  'FP', 'FN', 'F1', 'F2', 'Recall', 'Precision']+extra_column)
     
     if mode == 'sum' : return sum_df
     

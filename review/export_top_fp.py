@@ -4,7 +4,6 @@ import pandas as pd
 import sqlite3
 import sys
 from SlideRunner.dataAccess.database import Database
-sys.path.append('')
 from evaluation.lib.evaluation import generate_boxes
 import argparse
 

@@ -1,4 +1,4 @@
-import torch, torchvision
+import torch
 import numpy as np
 from torchvision.ops import nms as torch_nms
 

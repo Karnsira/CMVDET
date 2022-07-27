@@ -1,11 +1,11 @@
 import numpy as np
-import torch, torchvision
+import torch
 import torchvision.ops.boxes as bops
 
 def cal_iou(gt, det) :
     box1 = torch.tensor([gt], dtype=torch.float)
     box2 = torch.tensor([det], dtype=torch.float)
-    iou = bops.box_iou(box1, box2) # tensor([[0.1382]])
+    iou = bops.box_iou(box1, box2)
     return iou.item()
 
 def convertBoxesToOriginalCoor(boxes_dict : dict, slide_step = 256) :
