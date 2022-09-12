@@ -1,6 +1,6 @@
 import unittest
 
-class TestInference(unittest.TestCase):
+class TestDetectionInference(unittest.TestCase):
     def test_inference_success(self):
         actual = ''
         expected = ''
