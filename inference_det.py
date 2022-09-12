@@ -13,37 +13,15 @@ import torch, torchvision
 from torchvision.ops import nms as torch_nms
 from pathlib import Path
 import concurrent.futures
+from lib.utils import *
+from lib.nms_WSI import *
+from lib.objectDetectionHelper import convertBoxesToOriginalCoor
 from datetime import datetime
 from mmdet.apis import init_detector, inference_detector
 
-
-def nms(result_boxes, det_thres=None, iou_thres = 0.5):
-    
-    for filekey in result_boxes.keys():
-        arr = np.array(result_boxes[filekey])
-        arr = result_boxes[filekey]
-        if arr is not None and isinstance(arr, np.ndarray) and (arr.shape[0] == 0):
-            continue
-        if (arr.shape[0]>0):
-                arr = non_max_suppression(arr, arr[:,-1], det_thres, iou_thres)
-
-        result_boxes[filekey] = arr
-    
-    return result_boxes
-
-def non_max_suppression(boxes, scores, det_thres=None, iou_thres = 0.5):
-    if (det_thres is not None): # perform thresholding
-        to_keep = scores>det_thres
-        boxes = boxes[to_keep]
-        scores = scores[to_keep]
-    
-    keep_boxes = torch_nms(torch.tensor(boxes[:,:-1]), torch.tensor(scores)  , iou_thres) # det,score
-    boxes = boxes[keep_boxes.tolist()]
-    return boxes
-
 warnings.filterwarnings('ignore')
 
-with open("config.json") as json_data_file:
+with open("detection/inference/config.json") as json_data_file:
     config = json.load(json_data_file)
 
 print("--------------- Configuration ---------------")
@@ -67,43 +45,6 @@ def inference(model, batch_img, xy_index_list, boxes_dict) :
             boxes_dict[xy_index_list[idx]] = np.array([ box for box in pred_boxes])
     return boxes_dict
 
-def convertBoxesToOriginalCoor(boxes_dict : dict, slide_step = 256) :
-    boxes_list = list()
-    
-    for k in boxes_dict :
-        
-        x_ori = k[0]*slide_step
-        y_ori = k[1]*slide_step
-    
-        tmp_box = list()
-        
-        for box in boxes_dict[k] :
-            
-            x1, y1, x2, y2, score = box
-
-            x1 = x_ori + x1
-            y1 = y_ori + y1
-            x2 = x_ori + x2
-            y2 = y_ori + y2
-
-            pred_box = [x1, y1, x2, y2, score]
-            
-            tmp_box.append(np.array(pred_box))
-            boxes_list.append(np.array(pred_box))
-        
-        boxes_dict[k] = np.array(tmp_box)
-        
-    return np.array(boxes_list)
-
-def save_object(path, objects) :
-    with open(path, 'wb') as file :
-        pickle.dump(objects, file)
-
-def load_object(path) :
-    with open(path, 'rb') as file :
-        objects = pickle.load(file)
-        return objects
-    
 def display_time(seconds, granularity=2):
     intervals = (
     ('weeks', 604800),  # 60 * 60 * 24 * 7
@@ -129,7 +70,6 @@ test_slide_filenames = config['WSI_slides']
 print('Test slides : ', test_slide_filenames )
 print()
 print('Total slides : ', len(test_slide_filenames))
-
 
 
 WSI_path = config['WSI_path']
@@ -227,6 +167,8 @@ for idx , test_file_name in enumerate(test_slide_filenames) :
 
     save_object(boxes_path, objects = result_boxes)
     save_object(boxes_nms_path, objects = nms(result_boxes, iou_thres = nms_thres)) #nms_boxes
+
+    convert_pkl_to_geoJson(result_boxes, path = config['result'], format='.svs')
     
     try :
         del results

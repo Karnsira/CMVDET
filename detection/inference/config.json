@@ -7,5 +7,5 @@
     "patch_size": 256,
     "slide_step": 128,
     "nms_thres" : 0.1,
-    "result" : "output/"
+    "result" : "detection/inference/output/"
 }

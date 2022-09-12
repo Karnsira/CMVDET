@@ -6,6 +6,7 @@ import cv2
 from PIL import Image
 import numpy as np
 import argparse
+from lib.utils import convert_pkl_to_geoJson
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', help='config file path')
@@ -27,7 +28,7 @@ device = 'cuda:' + str(args.gpu_id)
 img_size = 224
 
 
-def inference(config:str, checkpoint:str, device:str, input_pkl:str, output_pkl:str, img_size:int, WSI_path:str):
+def inference(config:str, checkpoint:str, device:str, input_pkl:str, output_path:str, img_size:int, WSI_path:str):
     
     model = init_model(config, checkpoint, device)
     
@@ -77,8 +78,10 @@ def inference(config:str, checkpoint:str, device:str, input_pkl:str, output_pkl:
     
     cls_res = { slidename : np.array(cls_res[slidename]) for slidename in cls_res }
     
-    with open(output_pkl, 'wb') as pkl:
+    with open(output_path+'.pkl', 'wb') as pkl:
         pickle.dump(cls_res, pkl, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    convert_pkl_to_geoJson(cls_res, path=output_path, format='.svs')
     
     return cls_res
 
