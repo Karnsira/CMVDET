@@ -1,0 +1,11 @@
+{   "WSI_path" : "/data/WSI/",
+    "WSI_slides":  [ "SP63-6861 D.svs"] ,
+    "model": "/detection/training/checkpoints/test/latest.pth",
+    "model_config": "/detection/training/configs/config.py",
+    "gpu": "cuda:1",
+    "batch_size": 16,
+    "patch_size": 256,
+    "slide_step": 128,
+    "nms_thres" : 0.1,
+    "result" : "detection/inference/output/"
+}
