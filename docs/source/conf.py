@@ -22,8 +22,8 @@ sys.setrecursionlimit(1500)
 # -- Project information -----------------------------------------------------
 
 project = 'CMVDET'
-copyright = '2022, Taymung T. Pinthuphan'
-author = 'Taymung T. Pinthuphan'
+copyright = '2022, Tungmay T. Phinthuphan and Karn K. Siriwichai'
+author = 'Tungmay T. Phinthuphan and Karn K. Siriwichai'
 
 # The short X.Y version
 version = '1.0'

@@ -15,6 +15,7 @@ Preprocessing
 
 Training
 ---------------------------------------
+The model, dataset, and training schedule can be modified in ``config.py`` located at training/configs/config.py
 ::
 
     python3 mmdetection/tools/train.py  detection/training/configs/config.py \
