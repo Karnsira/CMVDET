@@ -29,16 +29,16 @@ Contents
    detection
    classification
    ensemble
-   citing
+   visualization
    help
 
 Contacts
 --------
 If you use CMVDET in your research, please cite
 
-Taymung T. Pinthuphan, et al., Cytomegalovirus Detection in Whole-Slide Images.
+Tungmay T. Phinthuphan and Karn K. Siriwichai, et al., Cytomegalovirus Detection in Whole-Slide Images.
 
-CMVDET is maintained by `Taymung T. Pinthuphan <https://github.com/Karnsira>` from the Tigger Institute of Neko.
+CMVDET is maintained by `Tungmay T. Phinthuphan <https://github.com/tungmaytaymung>`_ and `Karn K. Siriwichai <https://github.com/Karnsira>`_ from Chulalongkorn University.
 
 If you want to contribute, please leave an issue in `our repo <https://github.com/Karnsira/CMVDET>`_
 
